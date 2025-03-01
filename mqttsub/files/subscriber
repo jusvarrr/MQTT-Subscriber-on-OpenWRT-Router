@@ -1,0 +1,43 @@
+config subscriber 'general'
+    option 'enable' 1
+    option 'host' '192.168.1.1'
+    option 'username' 'random'
+    option 'password' 'random'
+    option 'ca' '/root/certs/ca.cert.pem'
+    option 'cert' '/root/certs/client.cert.pem'
+    option 'key' '/root/certs/client.key.pem'
+    option 'port' '8883'
+    option 'daemonize' 1
+
+config rule
+    option topic 'topic/1subtopic1'
+    option param_name 'temp.current.value'
+    option param_type 'number'
+    option operator '<='
+    option ref_value '20'
+    option email_acc '1'
+    list recipients 'justina.varoneck@gmail.com'
+
+config rule
+    option topic 'topic/1subtopic1'
+    option param_name 'lamp'
+    option param_type 'string'
+    option operator '>'
+    option ref_value 'on'
+    option email_acc '1'
+    list recipients 'justina.varoneck@gmail.com'
+
+config rule
+    option topic 'topic/tmp'
+    option param_name 'is_lamp_on'
+    option param_type 'bool'
+    option operator '=='
+    option ref_value 'false'
+    option email_acc '1'
+    list recipients 'justina.varoneck@gmail.com'
+
+config subscriber 'topics'
+    list topic 'topic/1subtopic1'
+    list topic 'topic/tmp'
+    list topic 'topic2'
+    list topic 'topic1/subtopic2'
