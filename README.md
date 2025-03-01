@@ -1,26 +1,15 @@
 # MQTT-Subscriber-on-OpenWRT-Router
 
-This program implements an MQTT subscriber and publisher system on a OpenWRT router. It includes features like subscription to multiple MQTT topics, user authentication, data encryption using TLS, event-based notifications to email, and logging. The user can configure multiple topics and receive notifications when specific messages containing matching topics, paramters and condition is received from these topics. Also it can view events logs on specific by running the script filtering by topic or date. 
+This package "mqttsub" implements an MQTT subscriber and publisher system on a OpenWRT router. It includes features like subscription to multiple MQTT topics, user authentication, data encryption using TLS, event-based notifications to email, and logging. The user can configure multiple topics and receive notifications when specific messages containing matching topics, paramters and condition are received by the broker running on the same router. Also event logs can be viewed by running the script and filtering by topic or date if needed.
 
-## Functional Requirements:
+## Features:
 - Multiple Topic Subscriptions
-- Topic Data Viewing in a database
+- Topic Data Viewing in a database with filters
 - MQTT User Authentication can be used
 - TLS Encryption can be used
 - Event Rules
 - Logging
-- Background Operation
-
-## Non-Functional Requirements:
-- Written in C.
-- **Libraries**:
-  - Mosquitto: Provides MQTT functionality for both the publisher and subscriber.
-  - libcurl: Used to send email notifications when an event rule is triggered.
-  
-## Getting Started
-
-These instructions will help you set up and run the program on your router.
-
+- Background Service running as daemon
 
 ### Installation
 #### Prerequisites
@@ -32,6 +21,16 @@ Ensure the following software and libraries are installed on your router:
 - **lsqlite3**: For saving topics data and getting data saved with queries.
 - **argp_standalone**: For reading configurations from configuration file of the package.
 - **cJSON**: for formatting and parsing MQTT messages data.
+- Your router should already have UCI configuration email addresses looking like:
+  ```config
+  config email '1'
+    option smtp_ip 'smtp.example.com'
+    option username 'your_username'
+    option password 'your_password'
+    option senderemail 'youremail@example.com'
+    option smtp_port '587'
+``
+- Events are listed in the configuration file: ```/etc/config/subscriber```
 
 ### 1. Clone the repository:
    ```bash
@@ -52,3 +51,13 @@ bash
    
 bash
    opkg install /tmp/*.ipk
+
+### 5. Having the package installed and service running, You can read the database to see logs from topics
+- Filter by date (can provide start and end date, only start date or only end date):
+  ```bash
+   /usr/bin/readlog.lua --date_from "start_date" --date_to "end_date"
+  ```
+- Filter by topics:
+  ```bash
+  /usr/bin/readlog.lua --topics "topic_name"
+  ```
