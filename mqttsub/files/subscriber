@@ -16,7 +16,7 @@ config rule
     option operator '<='
     option ref_value '20'
     option email_acc '1'
-    list recipients 'justina.varoneck@gmail.com'
+    list recipients ''
 
 config rule
     option topic 'topic/1subtopic1'
@@ -25,7 +25,7 @@ config rule
     option operator '>'
     option ref_value 'on'
     option email_acc '1'
-    list recipients 'justina.varoneck@gmail.com'
+    list recipients ''
 
 config rule
     option topic 'topic/tmp'
@@ -34,7 +34,7 @@ config rule
     option operator '=='
     option ref_value 'false'
     option email_acc '1'
-    list recipients 'justina.varoneck@gmail.com'
+    list recipients ''
 
 config subscriber 'topics'
     list topic 'topic/1subtopic1'
